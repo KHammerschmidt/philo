@@ -6,7 +6,7 @@
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 16:11:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/08 12:41:08 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/08 14:08:33 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ meals as has been requested. */
 static void chewing(t_data *data, int id)
 {
 	ft_print_log(id, 2, data);
+	pthread_mutex_lock(&(data->philo[id].check_lock));
 	data->philo[id].last_meal_ts = ft_get_time() - data->starttime;
 	ft_usleep(data->tte);
-	pthread_mutex_lock(&(data->philo[id].check_lock));
 	data->philo[id].num_meals++;
 	if (data->mte != -1 && data->philo[id].num_meals == data->mte)
 		data->fed_philos++;

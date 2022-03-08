@@ -6,7 +6,7 @@
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:59:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/08 13:14:00 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/08 14:05:27 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ static void	wait_for_assembly(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->assembly_lock));
 	philo->data->num_philos_created++;
-	pthread_mutex_unlock(&(philo->data->assembly_lock));
-	while (philo->data->num_philos_created != philo->data->num_philos)
+	if (philo->data->num_philos_created != philo->data->num_philos)
+	{
+		pthread_mutex_unlock(&(philo->data->assembly_lock));
 		ft_usleep(1);
+		wait_for_assembly(philo);
+	}
 }
 
 /* Simlutation would end if either one philosopher died or all are stuffed. */
