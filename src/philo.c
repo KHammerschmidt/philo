@@ -6,7 +6,7 @@
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:59:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/08 12:43:54 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/08 13:14:00 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,17 @@ void	*philo_main(void *varg)
 	wait_for_assembly(philo);
 	if (philo->id % 2 == 0 && philo->data->num_philos != 1)
 	{
-		ft_think(philo->id, philo->data);
-		if (philo->data->num_philos > 50)			//waiting times!
-			ft_usleep(10);
-		else if (philo->data->num_philos <= 3)
-			ft_usleep(1);
-		else if (philo->data->num_philos <= 5)
-			ft_usleep(1);
-		else if (philo->data->num_philos < 10)
+		// ft_think(philo->id, philo->data);
+		if (philo->data->num_philos <= 3)
+			ft_usleep(2);
+		if (philo->data->num_philos <= 5)
+			ft_usleep(2);
+		if (philo->data->num_philos <= 10)
 			ft_usleep(3);
-		else
+		if (philo->data->num_philos <= 50)
 			ft_usleep(5);
+		else
+			ft_usleep(10);
 	}
 	while (1)
 	{

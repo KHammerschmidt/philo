@@ -6,7 +6,7 @@
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:04:26 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/08 12:44:08 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/08 13:04:53 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static void	activate_reaper(t_data *data, int i)
 	timestamp = ft_get_time() - data->starttime;
 	pthread_mutex_lock(&(data->print_status));
 	printf("%lu %d died\n", timestamp, i + 1);
-	pthread_mutex_unlock(&(data->print_status));
 	data->death_lock++;
+	pthread_mutex_unlock(&(data->print_status));
 	pthread_mutex_unlock(&(data->reaper_lock));
 	pthread_mutex_unlock(&(data->philo[i].check_lock));
 }
