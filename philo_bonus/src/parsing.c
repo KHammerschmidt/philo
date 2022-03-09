@@ -6,11 +6,11 @@
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:32:55 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/07 16:17:56 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/09 17:43:58 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/philo.h"
+#include "../header/philo_bonus.h"
 
 /* Checks if program input fulfils required number of args and data types. */
 //what happens if a number is 0?
@@ -46,6 +46,7 @@ int	parsing(t_data *data, int argc, char *argv[])
 {
 	if (input_verification(argc, argv) != 0)
 		return (1);
+	data->exit_status = 0;
 	data->num_philos = ft_atoi(argv[1]);
 	data->ttd = ft_atoi(argv[2]);
 	data->tte = ft_atoi(argv[3]);
@@ -60,8 +61,6 @@ int	parsing(t_data *data, int argc, char *argv[])
 		printf("Error: memory allocation philo struct\n");
 		return (1);
 	}
-	data->death_lock = 0;
-	data->fed_lock = 0;
 	data->starttime = ft_get_time();
 	return (0);
 }

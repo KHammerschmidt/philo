@@ -1,7 +1,8 @@
-NAME 		=	philo
+NAME 		=	philo_bonus
 
 CC 			=	gcc
-CFLAGS 		=	-Wall -Werror -Wextra -fsanitize=thread -g
+CFLAGS 		=	-Wall -Werror -Wextra
+# -fsanitize=thread -g
 
 SRC_DIR		=	./src/
 OBJ_DIR		=	./obj/
@@ -9,20 +10,17 @@ OBJ_DIR		=	./obj/
 SRC_LIST	 =	main.c			\
 				parsing.c		\
 				init.c			\
-				philo.c			\
-				eating.c		\
-				sleep_think.c	\
-				print_log.c		\
-				time.c			\
-				thread_join.c	\
+				processes.c		\
+				lifecycle.c		\
+				time_log.c		\
 				reaper.c		\
-				stuffed.c		\
 				libft_utils.c
+
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))
 OBJ			=	$(addprefix $(OBJ_DIR), $(patsubst %.c, %.o, $(SRC_LIST)))
 
-INCLUDES	=	./header/philo.h
+INCLUDES	=	./header/philo_bonus.h
 
 # **************************************************************************** #
 #									RULES									   #

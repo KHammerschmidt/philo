@@ -1,4 +1,16 @@
-#include "../header/philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/08 15:16:23 by katharinaha       #+#    #+#             */
+/*   Updated: 2022/03/08 15:16:25 by katharinaha      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../header/philo_bonus.h"
 
 /* Checks if input is a digit, returns 0 if so. */
 int	ft_isdigit(int c)

@@ -6,7 +6,7 @@
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:33:07 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/07 23:11:08 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/08 16:35:17 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_philo_struct(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
+		// data->philo[i].id = i;	
 		data->philo[i].last_meal_ts = 0;
 		data->philo[i].num_meals = 0;
 		i++;

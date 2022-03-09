@@ -11,6 +11,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
+# include <pthread.h>
 
 #define GRABBING_FORKS	1
 #define RETURNING_FORKS	2
@@ -35,18 +36,22 @@ typedef struct 		s_data
 {
 	long			starttime;
 	int				num_philos;
-	int				num_philos_created;
 	int				ttd;
 	int				tte;
 	int				tts;
 	int				mte;
-	int				fed_philos;
-	int				death_lock;
-	int				fed_lock;
-	pthread_mutex_t	assembly_lock;
 	pthread_mutex_t	print_status;
+	int				fed_philos;
+
+	pthread_mutex_t	assembly_lock;
+	int				num_philos_created;
+
 	pthread_mutex_t	reaper_lock;
+	int				death_lock;
+
 	pthread_mutex_t	meal_lock;
+	int				fed_lock;
+
 	struct s_philo	*philo;
 	pthread_t		reaper;
 	pthread_t		stuffed;

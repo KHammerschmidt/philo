@@ -5,88 +5,63 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/05 19:33:07 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/07 23:11:08 by katharinaha      ###   ########.fr       */
+/*   Created: 2022/03/08 18:36:22 by katharinaha       #+#    #+#             */
+/*   Updated: 2022/03/09 20:25:37 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/philo.h"
+#include "../header/philo_bonus.h"
+
+static int	init_semaphores(t_data *data)
+{
+	//set up semaphores (unlink them to be sure that they are not used 
+	// somewhere else with the same name)
+	sem_unlink(SEM_FORKS);
+	sem_unlink(SEM_PRINT);
+	sem_unlink(SEM_STUFFED);
+	sem_unlink(SEM_ASSEMBLY);
+	
+	//open the main semaphore much like an actual file
+	data->sem_forks = sem_open(SEM_FORKS, O_CREAT | O_EXCL, 
+		S_IRWXU, data->num_philos);
+	data->sem_print = sem_open(SEM_PRINT, O_CREAT | O_EXCL, S_IRWXU, 1);
+	data->sem_stuffed = sem_open(SEM_STUFFED, O_CREAT | O_EXCL, S_IRWXU, 1);
+	data->sem_assembly = sem_open(SEM_ASSEMBLY, O_CREAT | O_EXCL, S_IRWXU, 1);
+	data->sem_reaper = sem_open(SEM_REAPER, O_CREAT | O_EXCL, S_IRWXU, 1);
+	if (data->sem_forks == SEM_FAILED || data->sem_print == SEM_FAILED
+		|| data->sem_stuffed == SEM_FAILED || data->sem_assembly == SEM_FAILED)
+		{
+			printf("Error: assembly\n"); 		// perror("Error: sem_open");
+			return (1);
+		}
+	return (0);
+}
 
 /* Initialises variables in t_philo. */
-void	init_philo_struct(t_data *data)
-{
-	int	i;
-	
-	i = 0;
-	while (i < data->num_philos)
-	{
-		data->philo[i].last_meal_ts = 0;
-		data->philo[i].num_meals = 0;
-		i++;
-	}
-}
+// static void	init_philo_struct(t_data *data)
+// {
+// 	int	i;
 
-/* Initialises the mutexes within t_philo, fork and a check_lock. */
-int	init_mutex_philo_fork_check(t_data *data)
-{
-	int	i;
+// 	i = 0;
+// 	while (i < data->num_philos_created)
+// 	{
+// 		data->philo[i].id = i;
+// 		data->philo[i].pid = -1;
+// 		data->philo[i].num_meals = 0;
+// 		data->philo[i].stuffed = 0;
+// 		data->philo[i].last_meal_ts = 0;
+// 		data->philo[i].data = data;	//is data already ready to be assigned?
+// 		i++;
+// 	}
+// }
 
-	i = 0;
-	while (i < data->num_philos)
-	{
-		data->philo[i].id = i;
-		if (pthread_mutex_init(&(data->philo[i].fork), NULL) != 0)
-		{
-			printf("Error: Mutex init fork\n");
-			return (1);
-		}
-		if (pthread_mutex_init(&(data->philo[i].check_lock), NULL) != 0)
-		{
-			printf("Error: Mutex init fork\n");
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-/* Initialises all mutexes of t_data: print status, reaper_lock, 
-assembly_lock and meal_lock. */
-static int	init_mutexes_data(t_data *data)
+int	init(t_data *data)
 {
-	if (pthread_mutex_init(&(data->print_status), NULL) != 0)
+	// init_philo_struct(data);
+	if (init_semaphores(data) != 0)
 	{
-		printf("Error: Mutex init\n");
+		perror("Init semaphores failed");
 		return (1);
 	}
-	if (pthread_mutex_init(&(data->reaper_lock), NULL) != 0)
-	{
-		printf("Error: Mutex init reaper lock\n");
-		return (1);
-	}
-	if (pthread_mutex_init(&(data->assembly_lock), NULL) != 0)
-	{
-		printf("Error: Mutex init assembly lock\n");
-		return (1);
-	}
-	if (data->mte != -1)
-	{
-		if (pthread_mutex_init(&(data->meal_lock), NULL) != 0)
-		{
-			printf("Error: Mutex init meal lock\n");
-			return (1);
-		}
-	}
-	return (0);
-}
-
-/* Calls the functions to initialise all mutexes within the structs. */
-int	ft_init(t_data *data)
-{
-	if (init_mutex_philo_fork_check(data) != 0)
-		return (1);
-	if (init_mutexes_data(data) != 0)
-		return (1);
-	init_philo_struct(data);
 	return (0);
 }
