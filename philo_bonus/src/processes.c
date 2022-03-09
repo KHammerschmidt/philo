@@ -6,7 +6,7 @@
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:21:23 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/09 21:37:11 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/09 23:27:44 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	philo_simulation_main(t_data *data)
 	pid = waitpid(-1, &status, WEXITSTATUS(status));
 	while (pid > 0)
 	{
-		if (status == 256)				//multiplies it by 8, actually returns 1?
+		if (status == 256)			//multiplies it by 8, actually returns 1?
 			kill(0, SIGINT);		// kill(0, SIGKILL);
 		pid = waitpid(-1, &status, WEXITSTATUS(status));
 	}

@@ -6,24 +6,11 @@
 /*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:04:26 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/09 22:26:32 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/09 23:31:53 by katharinaha      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo_bonus.h"
-
-/* Checks if philosophers are already stuffed. */
-// static int	check_meal_lock(t_data *data)
-// {
-// 	pthread_mutex_lock(&(data->meal_lock));
-// 	if (data->fed_lock == 1)
-// 	{
-// 		pthread_mutex_unlock(&(data->meal_lock));
-// 		return (1) ;
-// 	}
-// 	pthread_mutex_unlock(&(data->meal_lock));
-// 	return (0);
-// }
 
 /* Status change of a dead philo is printed and death_lock set to 1. */
 static void	activate_reaper(t_philo *philo, int i)
@@ -38,23 +25,10 @@ static void	activate_reaper(t_philo *philo, int i)
 	philo->data->death_lock++;
 	sem_post(philo->data->sem_print);
 	sem_post(philo->data->sem_reaper);
+	kill(-1, SIGKILL);	// kill(0, SIGINT);		// kill (-1, SIGINT/SIGKILL)???
 	exit(1);
 }
 
-static void	activate_stuffed(t_philo *philo)
-{
-	unsigned long	timestamp;
-
-	timestamp = 0;
-	sem_wait(philo->data->sem_reaper);
-	timestamp = ft_get_time() - philo->data->starttime;
-	sem_wait(philo->data->sem_print);
-	printf("%lu Everyone ate enough\n", timestamp);
-	sem_post(philo->data->sem_print);
-	sem_post(philo->data->sem_reaper);
-	exit(1);
-	// kill(philo->pid, SIGINT);
-}
 /* Checks in a loop if philosophers are already stuffed or if a philo exceeded 
 ttd with his last meal. */
 void	*reaper_main(void *varg)
@@ -70,13 +44,6 @@ void	*reaper_main(void *varg)
 			{
 				activate_reaper(philo, philo->id);
 			}
-		if (philo->data->mte != -1)
-		{
-			if (philo->data->fed_philos == philo->data->num_philos)
-			{
-				activate_stuffed(philo);
-			}
-		}
 		sem_post(philo->data->sem_reaper);
 	}
 	return (NULL);
