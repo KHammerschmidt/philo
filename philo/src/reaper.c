@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:04:26 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/11 21:12:05 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/11 22:17:56 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	activate_reaper(t_data *data, int i)
 	printf("%lu %d died\n", timestamp, i + 1);
 	pthread_mutex_unlock(&(data->print_status));
 	pthread_mutex_unlock(&(data->reaper_lock));
+	pthread_mutex_unlock(&(data->assembly_lock));
 	pthread_mutex_unlock(&(data->philo[i].check_lock));
 }
 
@@ -52,18 +53,17 @@ void	*reaper_main(void *varg)
 	data = (t_data *)varg;
 	while (1)
 	{
-		if (data->mte != -1)
-		{
-			if (check_meal_lock(data) != 0)
-				break ;
-		}
+		if (data->mte != -1 && check_meal_lock(data) != 0)
+			break ;
 		pthread_mutex_lock(&(data->philo[i].check_lock));
+		pthread_mutex_lock(&(data->assembly_lock));
 		if ((ft_get_time() - data->starttime) - data->philo[i].last_meal_ts
 			> data->ttd)
 		{
 			activate_reaper(data, i);
 			break ;
 		}
+		pthread_mutex_unlock(&(data->assembly_lock));
 		pthread_mutex_unlock(&(data->philo[i].check_lock));
 		i++;
 		if (i == data->num_philos)

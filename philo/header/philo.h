@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 21:47:23 by khammers          #+#    #+#             */
-/*   Updated: 2022/03/11 21:48:13 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/11 21:49:50 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ typedef struct s_philo
 	int				id;
 	int				num_meals;
 	long			last_meal_ts;
+	struct s_data	*data;
 	pthread_mutex_t	fork;
 	pthread_mutex_t	check_lock;
-	struct s_data	*data;
 }	t_philo;
 
 typedef struct s_data
@@ -52,20 +52,17 @@ typedef struct s_data
 	int				tte;
 	int				tts;
 	int				mte;
-	pthread_mutex_t	print_status;
 	int				fed_philos;
-	pthread_mutex_t	assembly_lock;
 	int				num_philos_created;
-
-	pthread_mutex_t	reaper_lock;
 	int				death_lock;
-
-	pthread_mutex_t	meal_lock;
 	int				fed_lock;
-
-	struct s_philo	*philo;
 	pthread_t		reaper;
 	pthread_t		stuffed;
+	struct s_philo	*philo;
+	pthread_mutex_t	print_status;
+	pthread_mutex_t	assembly_lock;
+	pthread_mutex_t	reaper_lock;
+	pthread_mutex_t	meal_lock;
 }	t_data;
 
 /* **************************************************************** */
@@ -77,7 +74,6 @@ int		main(int argc, char *argv[]);
 /* Initialisation & input handling */
 int		parsing(t_data *data, int argc, char *argv[]);
 int		ft_init(t_data *data);
-void	init_philo_struct(t_data *data);
 
 /* Thread handling, e.g. thread creation and joining. */
 int		ft_create_philo_threads(t_data *data);

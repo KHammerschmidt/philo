@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 16:11:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/11 21:43:01 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/11 22:10:35 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	single_philo(t_data *data, int id)
 	ft_print_log(id, 1, data);
 	ft_usleep(data->ttd + 5);
 	pthread_mutex_unlock(&(data->philo[id].fork));
+	pthread_detach(data->reaper);
+	pthread_detach(data->stuffed);
 }
 
 /* Depending on the status, a philosopher either takes his fork and the one

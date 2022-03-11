@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:59:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/11 21:40:31 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/11 22:18:14 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,19 @@ int	ft_create_philo_threads(t_data *data)
 			return (1);
 		}
 		i++;
+	}
+	if (pthread_join(data->reaper, NULL) != 0)
+	{
+		printf("Error: Thread could not be joined\n");
+		return (1);
+	}
+	if (data->mte != -1)
+	{
+		if (pthread_join(data->stuffed, NULL) != 0)
+		{
+			printf("Error: B Thread could not be joined\n");
+			return (1);
+		}
 	}
 	return (0);
 }
