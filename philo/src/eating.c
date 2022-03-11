@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eating.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 16:11:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/08 14:46:47 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/11 21:43:01 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	single_philo(t_data *data, int id)
 	pthread_mutex_unlock(&(data->philo[id].fork));
 }
 
-/* Depending on status a philosopher either takes his fork and the one next to
-him or returns the mentioned forks. */
+/* Depending on the status, a philosopher either takes his fork and the one
+next to him or returns the mentioned forks. */
 static void	fork_handling(t_data *data, int id, int status)
 {
 	if (status == GRABBING_FORKS)
@@ -34,7 +34,7 @@ static void	fork_handling(t_data *data, int id, int status)
 			pthread_mutex_lock(&data->philo[data->num_philos - 1].fork);
 		else
 			pthread_mutex_lock(&data->philo[id - 1].fork);
-		}
+	}
 	else if (status == RETURNING_FORKS)
 	{
 		pthread_mutex_unlock(&data->philo[id].fork);
@@ -45,6 +45,7 @@ static void	fork_handling(t_data *data, int id, int status)
 	}
 }
 
+/* Check if someone has died. */
 static int	check_death_lock(t_data *data)
 {
 	pthread_mutex_lock(&(data->reaper_lock));
@@ -57,9 +58,8 @@ static int	check_death_lock(t_data *data)
 	return (0);
 }
 
-/* Philosopher is actually eating and he checks if he has eating as many
-meals as has been requested. */
-static void chewing(t_data *data, int id)
+/* Philosopher is eating and the number of meals incremented. */
+static void	chewing(t_data *data, int id)
 {
 	ft_print_log(id, 2, data);
 	pthread_mutex_lock(&(data->philo[id].check_lock));
@@ -98,28 +98,3 @@ int	ft_eating_ceremony(int id, t_data *data)
 	}
 	return (0);
 }
-
-
-
-
-
-/* Locks the philo's fork and the one next to him and prints this status */
-// static void	grabbing_forks(t_data *data, int id)
-// {
-// 	pthread_mutex_lock(&(data->philo[id].fork));
-// 	ft_print_log(id, 1, data);
-// 	if (id == 0)
-// 		pthread_mutex_lock(&data->philo[data->num_philos - 1].fork);
-// 	else
-// 		pthread_mutex_lock(&data->philo[id - 1].fork);
-// }
-
-// /*  Releases the philo's fork and the one next to him after a successful meal */
-// static void	returning_forks(t_data *data, int id)
-// {
-// 	pthread_mutex_unlock(&data->philo[id].fork);
-// 	if (id == 0)
-// 		pthread_mutex_unlock(&data->philo[data->num_philos - 1].fork);
-// 	else
-// 		pthread_mutex_unlock(&data->philo[id - 1].fork);
-// }

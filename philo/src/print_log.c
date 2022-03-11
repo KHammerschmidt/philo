@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   print_log.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 21:26:58 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/08 11:43:27 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/11 21:41:17 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-/* check if all philos are full then nothing is printed */
+/* check if a philosopher has died or all philos are full, if yes, no more
+status logs are printed. */
 static int	check_end_of_simulation(t_data *data)
 {
 	pthread_mutex_lock(&data->reaper_lock);
@@ -34,11 +35,11 @@ static int	check_end_of_simulation(t_data *data)
 	return (0);
 }
 
-/* Prints the respective status of a philosophers, protecting each status
+/* Prints the status log of a philosophers, protecting each status
 with a print_status mutex. Nothing is printed if one philosopher has died. */
 void	ft_print_log(int id, int status, t_data *data)
 {
-	unsigned long timestamp;
+	unsigned long	timestamp;
 
 	timestamp = 0;
 	if (check_end_of_simulation(data) != 0)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/11 21:47:23 by khammers          #+#    #+#             */
+/*   Updated: 2022/03/11 21:48:13 by khammers         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -12,15 +24,16 @@
 # include <string.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <limits.h>
 
-#define GRABBING_FORKS	1
-#define RETURNING_FORKS	2
+# define GRABBING_FORKS	1
+# define RETURNING_FORKS	2
 
 /* **************************************************************** */
 /*							STRUCTS									*/
 /* **************************************************************** */
 
-typedef struct		s_philo
+typedef struct s_philo
 {
 	pthread_t		thread_id;
 	int				id;
@@ -29,10 +42,9 @@ typedef struct		s_philo
 	pthread_mutex_t	fork;
 	pthread_mutex_t	check_lock;
 	struct s_data	*data;
-} 	t_philo;
+}	t_philo;
 
-
-typedef struct 		s_data
+typedef struct s_data
 {
 	long			starttime;
 	int				num_philos;
@@ -42,7 +54,6 @@ typedef struct 		s_data
 	int				mte;
 	pthread_mutex_t	print_status;
 	int				fed_philos;
-
 	pthread_mutex_t	assembly_lock;
 	int				num_philos_created;
 
@@ -55,7 +66,7 @@ typedef struct 		s_data
 	struct s_philo	*philo;
 	pthread_t		reaper;
 	pthread_t		stuffed;
-} 	t_data;
+}	t_data;
 
 /* **************************************************************** */
 /*							PROTOYPES								*/

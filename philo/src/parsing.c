@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:32:55 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/07 16:17:56 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/11 21:34:39 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
 /* Checks if program input fulfils required number of args and data types. */
-//what happens if a number is 0?
 static int	input_verification(int argc, char *argv[])
 {
 	int	i;
@@ -25,7 +24,8 @@ static int	input_verification(int argc, char *argv[])
 		err_msg = 1;
 	while (i < argc)
 	{
-		if (ft_isnum(argv[i]) != 0 || ft_atoi(argv[i]) <= 0)
+		if (ft_isnum(argv[i]) != 0 || ft_atoi(argv[i]) <= 0
+			|| ft_atoi(argv[i]) > 2147483647)
 			err_msg = 1;
 		i++;
 	}
@@ -62,6 +62,6 @@ int	parsing(t_data *data, int argc, char *argv[])
 	}
 	data->death_lock = 0;
 	data->fed_lock = 0;
-	data->starttime = ft_get_time();
+	data->starttime = 0;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:33:07 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/08 16:35:17 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/11 21:35:26 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@
 void	init_philo_struct(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < data->num_philos)
 	{
-		// data->philo[i].id = i;	
 		data->philo[i].last_meal_ts = 0;
 		data->philo[i].num_meals = 0;
 		i++;
@@ -51,7 +50,7 @@ int	init_mutex_philo_fork_check(t_data *data)
 	return (0);
 }
 
-/* Initialises all mutexes of t_data: print status, reaper_lock, 
+/* Initialises all mutexes of t_data: print status, reaper_lock,
 assembly_lock and meal_lock. */
 static int	init_mutexes_data(t_data *data)
 {
@@ -81,7 +80,7 @@ static int	init_mutexes_data(t_data *data)
 	return (0);
 }
 
-/* Calls the functions to initialise all mutexes within the structs. */
+/* Calls the functions to initialise all mutexes. */
 int	ft_init(t_data *data)
 {
 	if (init_mutex_philo_fork_check(data) != 0)

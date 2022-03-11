@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:17:21 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/08 15:17:22 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/11 21:45:54 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-/* Adapted usleep function with more precision.  */
+/* Adapted usleep function. Thread sleeps exactly the indicated milliseconds
+for a more precise usleep(). */
 void	ft_usleep(useconds_t ms)
 {
 	long	time;
@@ -25,7 +26,7 @@ void	ft_usleep(useconds_t ms)
 /* Gets the current time in milliseconds. */
 long	ft_get_time(void)
 {
-	long 			current_time;
+	long			current_time;
 	int				err_msg;
 	struct timeval	time;
 
