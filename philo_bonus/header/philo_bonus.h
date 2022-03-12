@@ -81,6 +81,7 @@ int		parsing(t_data *data, int argc, char *argv[]);
 int		init(t_data *data);
 
 /* Process handling */
+int	philo_lifecycle(t_philo *philo);
 int	philo_simulation_main(t_data *data);
 // int philo_simulation_processes(t_data *data);
 void	ft_free_and_exit(t_data *data, int status);

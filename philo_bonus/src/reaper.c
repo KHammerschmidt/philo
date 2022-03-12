@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reaper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:04:26 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/09 23:31:53 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/12 22:19:53 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static void	activate_reaper(t_philo *philo, int i)
 	philo->data->death_lock++;
 	sem_post(philo->data->sem_print);
 	sem_post(philo->data->sem_reaper);
-	kill(-1, SIGKILL);	// kill(0, SIGINT);		// kill (-1, SIGINT/SIGKILL)???
+	// kill(-1, SIGKILL);	// kill(0, SIGINT);		// kill (-1, SIGINT/SIGKILL)???
 	exit(1);
 }
 
-/* Checks in a loop if philosophers are already stuffed or if a philo exceeded 
+/* Checks in a loop if philosophers are already stuffed or if a philo exceeded
 ttd with his last meal. */
 void	*reaper_main(void *varg)
 {

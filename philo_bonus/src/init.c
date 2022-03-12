@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 18:36:22 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/09 20:25:37 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/12 22:18:34 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static int	init_semaphores(t_data *data)
 {
-	//set up semaphores (unlink them to be sure that they are not used 
+	//set up semaphores (unlink them to be sure that they are not used
 	// somewhere else with the same name)
 	sem_unlink(SEM_FORKS);
 	sem_unlink(SEM_PRINT);
 	sem_unlink(SEM_STUFFED);
 	sem_unlink(SEM_ASSEMBLY);
-	
+
 	//open the main semaphore much like an actual file
-	data->sem_forks = sem_open(SEM_FORKS, O_CREAT | O_EXCL, 
+	data->sem_forks = sem_open(SEM_FORKS, O_CREAT | O_EXCL,
 		S_IRWXU, data->num_philos);
 	data->sem_print = sem_open(SEM_PRINT, O_CREAT | O_EXCL, S_IRWXU, 1);
 	data->sem_stuffed = sem_open(SEM_STUFFED, O_CREAT | O_EXCL, S_IRWXU, 1);
@@ -58,6 +58,7 @@ static int	init_semaphores(t_data *data)
 int	init(t_data *data)
 {
 	// init_philo_struct(data);
+	data->starttime = ft_get_time() + 10;
 	if (init_semaphores(data) != 0)
 	{
 		perror("Init semaphores failed");

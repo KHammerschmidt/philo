@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lifecycle.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 16:11:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/09 23:29:40 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/12 22:21:04 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	single_philo(t_data *data, int id)
 {
 	sem_wait(data->sem_forks);
 	ft_print_log(id, 1, data);
-	ft_usleep(data->ttd);
+	ft_usleep(data->ttd + 2);
 	sem_post(data->sem_forks);
 	sem_wait(data->sem_reaper);
 	ft_print_log(id, 5, data);
@@ -47,9 +47,9 @@ int	ft_eating_ceremony(int id, t_data *data)
 	{
 		sem_wait(data->sem_reaper);
 		sem_wait(data->sem_print);
-		printf("%lu %d has eaten enough\n", 
+		printf("%lu %d has eaten enough\n",
 			ft_get_time() - data->starttime, id + 1);
-		sem_post(data->sem_print);	
+		sem_post(data->sem_print);
 		sem_post(data->sem_reaper);
 		exit(0);
 	}
@@ -67,4 +67,25 @@ void	ft_sleep(int id, t_data *data)
 void	ft_think(int id, t_data *data)
 {
 	ft_print_log(id, 4, data);
+}
+
+int	philo_lifecycle(t_philo *philo)
+{
+	if (ft_create_reaper_thread(philo) != 0)
+		exit (1);
+	while(ft_get_time() < philo->data->starttime)
+		ft_usleep(1);
+	// wait_for_assembly(philo);
+	if ((philo->id % 2) == 0 && philo->data->num_philos != 1)
+	{
+		// ft_think(philo->id, philo->data);
+		ft_usleep(philo->data->tte - 1);
+	}
+	while (1)
+	{
+		ft_eating_ceremony(philo->id, philo->data);
+		ft_sleep(philo->id, philo->data);
+		ft_think(philo->id, philo->data);
+	}
+	exit(0);
 }

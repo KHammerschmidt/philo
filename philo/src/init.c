@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:33:07 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/11 21:35:26 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/12 21:36:25 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ int	init_mutex_philo_fork_check(t_data *data)
 			printf("Error: Mutex init fork\n");
 			return (1);
 		}
-		if (pthread_mutex_init(&(data->philo[i].check_lock), NULL) != 0)
-		{
-			printf("Error: Mutex init fork\n");
-			return (1);
-		}
 		i++;
 	}
 	return (0);
@@ -68,14 +63,6 @@ static int	init_mutexes_data(t_data *data)
 	{
 		printf("Error: Mutex init assembly lock\n");
 		return (1);
-	}
-	if (data->mte != -1)
-	{
-		if (pthread_mutex_init(&(data->meal_lock), NULL) != 0)
-		{
-			printf("Error: Mutex init meal lock\n");
-			return (1);
-		}
 	}
 	return (0);
 }

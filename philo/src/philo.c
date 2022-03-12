@@ -6,31 +6,14 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:59:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/11 22:18:14 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/12 22:05:01 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-/* Philosophers are waiting until all philosophers are assembled. If all are
-created, the starttime is set once. */
-static void	wait_for_assembly(t_philo *philo)
-{
-	pthread_mutex_lock(&(philo->data->assembly_lock));
-	philo->data->num_philos_created++;
-	while (philo->data->num_philos_created != philo->data->num_philos)
-	{
-		pthread_mutex_unlock(&(philo->data->assembly_lock));
-		ft_usleep(1);
-		pthread_mutex_lock(&(philo->data->assembly_lock));
-	}
-	if (philo->data->starttime == 0)
-		philo->data->starttime = ft_get_time();
-	pthread_mutex_unlock(&(philo->data->assembly_lock));
-}
-
 /* Simlutation would end if either one philosopher dies or all are stuffed. */
-static int	check_end_of_simulation(t_philo *philo)
+int	check_end_of_simulation(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->reaper_lock));
 	if (philo->data->death_lock == 1)
@@ -38,16 +21,12 @@ static int	check_end_of_simulation(t_philo *philo)
 		pthread_mutex_unlock(&(philo->data->reaper_lock));
 		return (1);
 	}
-	pthread_mutex_unlock(&(philo->data->reaper_lock));
-	if (philo->data->mte == -1)
-		return (0);
-	pthread_mutex_lock(&(philo->data->meal_lock));
-	if (philo->data->fed_lock == 1)
+	if (philo->data->fed_philos == philo->data->num_philos)
 	{
-		pthread_mutex_unlock(&(philo->data->meal_lock));
+		pthread_mutex_unlock(&(philo->data->reaper_lock));
 		return (1);
 	}
-	pthread_mutex_unlock(&(philo->data->meal_lock));
+	pthread_mutex_unlock(&(philo->data->reaper_lock));
 	return (0);
 }
 
@@ -60,10 +39,11 @@ void	*philo_lifecycle(void *varg)
 	t_philo	*philo;
 
 	philo = (t_philo *)varg;
-	wait_for_assembly(philo);
-	if (philo->id % 2 == 0 && philo->data->num_philos != 1)
+	pthread_mutex_lock(&(philo->data->assembly_lock));
+	pthread_mutex_unlock(&(philo->data->assembly_lock));
+	if ((philo->id % 2) == 0 && philo->data->num_philos != 1)
 	{
-		ft_think(philo->id, philo->data);
+		// ft_think(philo->id, philo->data);
 		ft_usleep(philo->data->tte - 1);
 	}
 	while (1)
@@ -84,6 +64,7 @@ int	ft_create_philo_threads(t_data *data)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&(data->assembly_lock));
 	while (i < data->num_philos)
 	{
 		data->philo[i].data = data;
@@ -95,18 +76,7 @@ int	ft_create_philo_threads(t_data *data)
 		}
 		i++;
 	}
-	if (pthread_join(data->reaper, NULL) != 0)
-	{
-		printf("Error: Thread could not be joined\n");
-		return (1);
-	}
-	if (data->mte != -1)
-	{
-		if (pthread_join(data->stuffed, NULL) != 0)
-		{
-			printf("Error: B Thread could not be joined\n");
-			return (1);
-		}
-	}
+	data->starttime = ft_get_time();
+	pthread_mutex_unlock(&(data->assembly_lock));
 	return (0);
 }

@@ -3,48 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:21:23 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/09 23:27:44 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/12 22:20:32 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo_bonus.h"
 
 /* Philosophers are waiting until a  philosophers are assembled.  */
-static int	wait_for_assembly(t_philo *philo)
-{
-	sem_wait(philo->data->sem_assembly);
-	philo->data->num_philos_created++;
-	if (philo->data->num_philos_created != philo->data->num_philos)
-	{
-		sem_post(philo->data->sem_assembly);
-		ft_usleep(1);
-		sem_wait(philo->data->sem_assembly);
-	}
-	sem_post(philo->data->sem_assembly);
-	return (0);
-}
-
-int	philo_lifecycle(t_philo *philo)
-{
-	if (ft_create_reaper_thread(philo) != 0)
-		exit (1);
-	wait_for_assembly(philo);
-	if ((philo->id % 2) == 0 && philo->data->num_philos != 1)
-	{
-		// ft_think(philo->id, philo->data);
-		ft_usleep(philo->data->tte - 1);
-	}
-	while (1)
-	{
-		ft_eating_ceremony(philo->id, philo->data);
-		ft_sleep(philo->id, philo->data);
-		ft_think(philo->id, philo->data);
-	}
-	exit(0);
-}
+// static int	wait_for_assembly(t_philo *philo)
+// {
+// 	sem_wait(philo->data->sem_assembly);
+// 	philo->data->num_philos_created++;
+// 	if (philo->data->num_philos_created != philo->data->num_philos)
+// 	{
+// 		sem_post(philo->data->sem_assembly);
+// 		ft_usleep(1);
+// 		sem_wait(philo->data->sem_assembly);
+// 	}
+// 	sem_post(philo->data->sem_assembly);
+// 	return (0);
+// }
 
 int	philo_simulation_main(t_data *data)
 {
@@ -82,7 +63,7 @@ int	philo_simulation_main(t_data *data)
 	data->exit_status = WEXITSTATUS(status);
 	return (data->exit_status);
 
-	//my function from minishell and pipex bonus part :) 
+	//my function from minishell and pipex bonus part :)
 	// i = 0;
 	// int save = 0;
 	// while (i != -1)
@@ -205,11 +186,11 @@ int	philo_simulation_main(t_data *data)
 // {
 // 	sem_wait(philo->data->sem_reaper);
 // 	if (philo->data->death_lock == 1)
-// 	{ 
+// 	{
 // 		sem_post(philo->data->sem_reaper);
 // 		// kill(philo->id, SIGINT);
 // 		exit(1);
-// 	} 
+// 	}
 // 	sem_post(philo->data->sem_reaper);
 
 // 	// if (philo->data->mte == -1)
