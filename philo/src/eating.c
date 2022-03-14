@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 16:11:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/12 21:38:00 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/14 23:08:24 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	single_philo(t_data *data, int id)
 next to him or returns the mentioned forks. */
 static void	fork_handling(t_data *data, int id, int status)
 {
+	//je nach id % gerade dann gabel rechts sonst gabel links
 	if (status == GRABBING_FORKS)
 	{
 		pthread_mutex_lock(&(data->philo[id].fork));
