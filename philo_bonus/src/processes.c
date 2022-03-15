@@ -6,26 +6,11 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:21:23 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/12 22:20:32 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/15 23:11:49 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo_bonus.h"
-
-/* Philosophers are waiting until a  philosophers are assembled.  */
-// static int	wait_for_assembly(t_philo *philo)
-// {
-// 	sem_wait(philo->data->sem_assembly);
-// 	philo->data->num_philos_created++;
-// 	if (philo->data->num_philos_created != philo->data->num_philos)
-// 	{
-// 		sem_post(philo->data->sem_assembly);
-// 		ft_usleep(1);
-// 		sem_wait(philo->data->sem_assembly);
-// 	}
-// 	sem_post(philo->data->sem_assembly);
-// 	return (0);
-// }
 
 int	philo_simulation_main(t_data *data)
 {
@@ -74,20 +59,6 @@ int	philo_simulation_main(t_data *data)
 	// }
 }
 
-
-
-	// philo->sem_forks = sem_open(SEM_FORKS, 0);
-	// philo->sem_print = sem_open(SEM_PRINT, 0);
-	// philo->sem_stuffed = sem_open(SEM_STUFFED, 0);
-	// philo->sem_assembly = sem_open(SEM_ASSEMBLY, 0);
-	// if (philo->sem_forks == SEM_FAILED || philo->sem_print == SEM_FAILED
-	// 	|| philo->sem_stuffed == SEM_FAILED || philo->sem_assembly == SEM_FAILED)
-	// {
-	// 	printf("Error: semaphore child process.\n");
-	// 	return (1);
-	// 	// ft_free_and_exit(data, phil???, 1);
-	// 	// exit(1);
-	// }
 
 
 
@@ -195,12 +166,9 @@ int	philo_simulation_main(t_data *data)
 
 // 	// if (philo->data->mte == -1)
 // 	// 	return (0);
-// 	// sem_wait(philo->data->sem_stuffed);
 // 	// if (philo->data->fed_lock == 1)
 // 	// {
-// 	// 	sem_post(philo->data->sem_stuffed);
 // 	// 	return (1) ;
 // 	// }
-// 	// sem_post(philo->data->sem_stuffed);
 // 	return (0);
 // }

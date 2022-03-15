@@ -6,25 +6,21 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:19:07 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/12 22:22:01 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/15 23:22:39 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo_bonus.h"
 
-//int philo?? == 0 child philos were not created
-//if different than 0 they were created and have to be freed
 void	ft_free_and_exit(t_data *data, int status)
 {
-	// if (data->philo)		//why can't I free this?
-	// {
-	// 	free(data->philo);
-	// 	data->philo = NULL;
-	// }
+	if (data->philo)		//why can't I free this?
+	{
+		free(data->philo);
+		data->philo = NULL;
+	}
 	sem_close(data->sem_forks);
 	sem_close(data->sem_print);
-	sem_close(data->sem_stuffed);
-	sem_close(data->sem_assembly);
 	if (status == 1)
 		exit(data->exit_status);
 	if (status == -1)
@@ -92,3 +88,8 @@ end after 7 meals_per_philo
 end after 7 meals_per_philo
 
 */
+
+
+/* Problems:
+- hängt sich auf wenn mte gesetzt ist
+- printed weiter wenn jemand gestorben ist */

@@ -20,14 +20,12 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# define GRABBING_FORKS		1
+# define GRABBING_FORKS	1
 # define RETURNING_FORKS	2
 
 // filenames for the semaphores
 # define SEM_FORKS	"/sem_forks"
 # define SEM_PRINT	"/sem_print"
-# define SEM_STUFFED "/sem_stuffed"
-# define SEM_ASSEMBLY "/sem_assembly"
 # define SEM_REAPER "/sem_reaper"
 // # define SEM_CHECK_MEAL	"sem_check_meal"
 
@@ -63,8 +61,6 @@ typedef struct 		s_data
 	int				fed_lock;
 	sem_t			*sem_forks;
 	sem_t			*sem_print;
-	sem_t			*sem_stuffed;
-	sem_t			*sem_assembly;
 	sem_t			*sem_reaper;
 	struct s_philo	*philo;
 	// pthread_t		stuffed;

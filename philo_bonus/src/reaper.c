@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:04:26 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/12 22:19:53 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/15 23:00:16 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,12 @@ static void	activate_reaper(t_philo *philo, int i)
 {
 	unsigned long timestamp;
 
-	timestamp = 0;
-	sem_wait(philo->data->sem_reaper);
 	timestamp = ft_get_time() - philo->data->starttime;
+	philo->data->death_lock++;				//brauche ich das noch?, how to end processes?
+	sem_post(philo->data->sem_reaper);
 	sem_wait(philo->data->sem_print);
 	printf("%lu %d died\n", timestamp, i + 1);
-	philo->data->death_lock++;
 	sem_post(philo->data->sem_print);
-	sem_post(philo->data->sem_reaper);
-	// kill(-1, SIGKILL);	// kill(0, SIGINT);		// kill (-1, SIGINT/SIGKILL)???
-	exit(1);
 }
 
 /* Checks in a loop if philosophers are already stuffed or if a philo exceeded
@@ -43,6 +39,8 @@ void	*reaper_main(void *varg)
 			> philo->data->ttd)
 			{
 				activate_reaper(philo, philo->id);
+				kill(0, SIGINT);
+				exit(1);
 			}
 		sem_post(philo->data->sem_reaper);
 	}

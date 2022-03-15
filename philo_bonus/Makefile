@@ -2,7 +2,7 @@ NAME 		=	philo_bonus
 
 CC 			=	gcc
 CFLAGS 		=	-Wall -Werror -Wextra
-# -fsanitize=thread -g
+#  -fsanitize=thread -g
 
 SRC_DIR		=	./src/
 OBJ_DIR		=	./obj/

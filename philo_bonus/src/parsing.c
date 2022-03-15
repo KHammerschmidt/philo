@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katharinahammerschmidt <katharinahammer    +#+  +:+       +#+        */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:32:55 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/09 17:43:58 by katharinaha      ###   ########.fr       */
+/*   Updated: 2022/03/15 23:18:16 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo_bonus.h"
 
 /* Checks if program input fulfils required number of args and data types. */
-//what happens if a number is 0?
 static int	input_verification(int argc, char *argv[])
 {
 	int	i;
