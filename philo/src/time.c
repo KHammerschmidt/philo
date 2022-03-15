@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:17:21 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/14 23:05:09 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:38:37 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	ft_usleep(useconds_t ms)
 
 	time = ft_get_time();
 	while (ft_get_time() < (time + ms))
-		usleep(50);
-		// ;
+		usleep(500);
 }
+
 
 /* Gets the current time in milliseconds. */
 long	ft_get_time(void)

@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:04:26 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/12 21:59:30 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/15 12:22:50 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ static void	activate_reaper(t_data *data, int i)
 	timestamp = 0;
 	timestamp = ft_get_time() - data->starttime;
 	data->death_lock++;
+	pthread_mutex_unlock(&(data->reaper_lock));
 	pthread_mutex_lock(&(data->print_status));
 	printf("%lu %d died\n", timestamp, i + 1);
 	pthread_mutex_unlock(&(data->print_status));
-	pthread_mutex_unlock(&(data->reaper_lock));
 }
 
 static void activate_stuffed(t_data *data)
 {
-	pthread_mutex_lock(&(data->print_status));
 	data->fed_lock++;
+	pthread_mutex_unlock(&(data->reaper_lock));
+	pthread_mutex_lock(&(data->print_status));
 	printf("%ld All philosophers are full!\n", \
 		ft_get_time() - data->starttime);
 	pthread_mutex_unlock(&(data->print_status));
-	pthread_mutex_unlock(&(data->reaper_lock));
 }
 
 /* Checks in a loop if philosophers are already stuffed or if a philo exceeded

@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:59:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/14 23:02:03 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:39:21 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	*philo_lifecycle(void *varg)
 	{
 		// ft_think(philo->id, philo->data);
 		ft_usleep(philo->data->tte - 1);
-		// ft_usleep(10);
 	}
 	while (1)
 	{
@@ -55,9 +54,8 @@ void	*philo_lifecycle(void *varg)
 			break ;
 		ft_sleep(philo->id, philo->data);
 		ft_think(philo->id, philo->data);
-		// long timestamp = ft_get_time();
-		while (philo->last_meal_ts + (philo->data->ttd - 20) > ft_get_time())
-			ft_usleep(1);
+		// while (philo->last_meal_ts + (philo->data->ttd - 20) > ft_get_time())
+		// 	ft_usleep(20);
 	}
 	return (NULL);
 }

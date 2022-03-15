@@ -1,9 +1,7 @@
 NAME 		=	philo
 
 CC 			=	gcc
-CFLAGS 		=	-Wall -Werror -Wextra -pthread
-# -g -fsanitize=thread
-# -fsanitize=thread -g
+CFLAGS 		=	-Wall -Werror -Wextra -pthread -g -fsanitize=thread
 
 SRC_DIR		=	./src/
 OBJ_DIR		=	./obj/
@@ -19,7 +17,7 @@ SRC_LIST	 =	main.c			\
 				thread_join.c	\
 				reaper.c		\
 				libft_utils.c
-# stuffed.c	
+# stuffed.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))
 OBJ			=	$(addprefix $(OBJ_DIR), $(patsubst %.c, %.o, $(SRC_LIST)))
