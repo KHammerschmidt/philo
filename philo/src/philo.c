@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:59:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/15 18:39:21 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/17 14:22:16 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,15 @@ void	*philo_lifecycle(void *varg)
 	pthread_mutex_unlock(&(philo->data->assembly_lock));
 	if ((philo->id % 2) == 0 && philo->data->num_philos != 1)
 	{
-		// ft_think(philo->id, philo->data);
+		ft_think(philo->id, philo->data);
 		ft_usleep(philo->data->tte - 1);
 	}
-	while (1)
+	while (check_end_of_simulation(philo) != 1)
 	{
-		if (check_end_of_simulation(philo) != 0)
-			break ;
 		if (ft_eating_ceremony(philo->id, philo->data) != 0)
 			break ;
 		ft_sleep(philo->id, philo->data);
 		ft_think(philo->id, philo->data);
-		// while (philo->last_meal_ts + (philo->data->ttd - 20) > ft_get_time())
-		// 	ft_usleep(20);
 	}
 	return (NULL);
 }

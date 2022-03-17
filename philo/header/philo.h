@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 21:47:23 by khammers          #+#    #+#             */
-/*   Updated: 2022/03/15 12:22:44 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/15 20:43:47 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	ft_sleep(int id, t_data *data);
 int		ft_create_reaper_thread(t_data *data);
 int		ft_create_stuffed_thread(t_data *data);
 int		ft_join_threads(t_data *data);
-int	check_end_of_simulation(t_philo *philo);
+int		check_end_of_simulation(t_philo *philo);
+
 /* Time related functions */
 long	ft_get_time(void);
 void	ft_usleep(useconds_t ms);

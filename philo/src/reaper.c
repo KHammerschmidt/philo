@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:04:26 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/15 12:22:50 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:54:57 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,21 @@
 /* Status change of a dead philo is printed and death_lock set to 1. */
 static void	activate_reaper(t_data *data, int i)
 {
-	unsigned long	timestamp;
-
-	timestamp = 0;
-	timestamp = ft_get_time() - data->starttime;
 	data->death_lock++;
+	ft_print_log(i, 6, data);
 	pthread_mutex_unlock(&(data->reaper_lock));
-	pthread_mutex_lock(&(data->print_status));
-	printf("%lu %d died\n", timestamp, i + 1);
-	pthread_mutex_unlock(&(data->print_status));
 }
 
-static void activate_stuffed(t_data *data)
+static void	activate_stuffed(t_data *data, int i)
 {
-	data->fed_lock++;
+	ft_print_log(i, 5, data);
 	pthread_mutex_unlock(&(data->reaper_lock));
-	pthread_mutex_lock(&(data->print_status));
-	printf("%ld All philosophers are full!\n", \
-		ft_get_time() - data->starttime);
-	pthread_mutex_unlock(&(data->print_status));
+}
+
+static void	reset_i(int *i)
+{
+	*i = 0;
+	ft_usleep(5);
 }
 
 /* Checks in a loop if philosophers are already stuffed or if a philo exceeded
@@ -56,13 +52,13 @@ void	*reaper_main(void *varg)
 		}
 		if (data->num_philos == data->fed_philos)
 		{
-			activate_stuffed(data);
+			activate_stuffed(data, i);
 			break ;
 		}
 		pthread_mutex_unlock(&(data->reaper_lock));
 		i++;
 		if (i == data->num_philos)
-			i = 0;
+			reset_i(&i);
 	}
 	return (NULL);
 }

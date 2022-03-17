@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 16:11:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/14 23:08:24 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/17 14:22:12 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	single_philo(t_data *data, int id)
 next to him or returns the mentioned forks. */
 static void	fork_handling(t_data *data, int id, int status)
 {
-	//je nach id % gerade dann gabel rechts sonst gabel links
 	if (status == GRABBING_FORKS)
 	{
 		pthread_mutex_lock(&(data->philo[id].fork));
@@ -52,6 +51,12 @@ static void	chewing(t_data *data, int id)
 	ft_print_log(id, 2, data);
 	if (check_end_of_simulation(data->philo) != 0)
 		return ;
+	pthread_mutex_lock(&data->reaper_lock);
+	data->philo[id].last_meal_ts = ft_get_time() - data->starttime;
+	data->philo[id].num_meals++;
+	if (data->mte != -1 && data->philo[id].num_meals == data->mte)
+		data->fed_philos++;
+	pthread_mutex_unlock(&data->reaper_lock);
 	ft_usleep(data->tte);
 }
 
@@ -65,11 +70,6 @@ int	ft_eating_ceremony(int id, t_data *data)
 		return (1);
 	}
 	fork_handling(data, id, GRABBING_FORKS);
-	if (check_end_of_simulation(data->philo) != 0)
-	{
-		fork_handling(data, id, RETURNING_FORKS);
-		return (1);
-	}
 	chewing(data, id);
 	fork_handling(data, id, RETURNING_FORKS);
 	return (0);

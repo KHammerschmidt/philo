@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:19:07 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/15 11:55:58 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:19:29 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ int	main(int argc, char *argv[])
 /*
 TEST CASES
 
-ERROR with
-./philo 40 600 200 200
-
 ONE PHILOSOPHER
 ./philo 1 800 200 200
 die after 800 milliseconds
@@ -48,7 +45,6 @@ run for ever
 run for ever
 ./philo 99 620 200 200
 run for ever
-./philo 98 440 200 200
 run for ever
 ./philo 198 440 200 200
 run for ever
