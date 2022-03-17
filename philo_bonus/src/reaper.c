@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:04:26 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/15 23:00:16 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:54:47 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,11 @@
 /* Status change of a dead philo is printed and death_lock set to 1. */
 static void	activate_reaper(t_philo *philo, int i)
 {
-	unsigned long timestamp;
+	unsigned long	timestamp;
 
 	timestamp = ft_get_time() - philo->data->starttime;
-	philo->data->death_lock++;				//brauche ich das noch?, how to end processes?
-	sem_post(philo->data->sem_reaper);
 	sem_wait(philo->data->sem_print);
 	printf("%lu %d died\n", timestamp, i + 1);
-	sem_post(philo->data->sem_print);
 }
 
 /* Checks in a loop if philosophers are already stuffed or if a philo exceeded
@@ -37,12 +34,13 @@ void	*reaper_main(void *varg)
 		sem_wait(philo->data->sem_reaper);
 		if ((ft_get_time() - philo->data->starttime) - philo->last_meal_ts
 			> philo->data->ttd)
-			{
-				activate_reaper(philo, philo->id);
-				kill(0, SIGINT);
-				exit(1);
-			}
+		{
+			activate_reaper(philo, philo->id);
+			kill(0, SIGINT);
+			exit(1);
+		}
 		sem_post(philo->data->sem_reaper);
+		ft_usleep(5);
 	}
 	return (NULL);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 15:04:15 by khammers          #+#    #+#             */
+/*   Updated: 2022/03/16 15:05:23 by khammers         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
@@ -22,19 +34,15 @@
 
 # define GRABBING_FORKS	1
 # define RETURNING_FORKS	2
-
-// filenames for the semaphores
 # define SEM_FORKS	"/sem_forks"
 # define SEM_PRINT	"/sem_print"
 # define SEM_REAPER "/sem_reaper"
-// # define SEM_CHECK_MEAL	"sem_check_meal"
-
 
 /* **************************************************************** */
 /*							STRUCTS									*/
 /* **************************************************************** */
 
-typedef struct		s_philo
+typedef struct s_philo
 {
 	int				id;
 	pid_t			pid;
@@ -43,10 +51,9 @@ typedef struct		s_philo
 	long			last_meal_ts;
 	pthread_t		reaper;
 	struct s_data	*data;
-} 	t_philo;
+}	t_philo;
 
-
-typedef struct 		s_data
+typedef struct s_data
 {
 	int				exit_status;
 	long			starttime;
@@ -57,14 +64,11 @@ typedef struct 		s_data
 	int				tts;
 	int				mte;
 	int				fed_philos;
-	int				death_lock;
-	int				fed_lock;
 	sem_t			*sem_forks;
 	sem_t			*sem_print;
 	sem_t			*sem_reaper;
 	struct s_philo	*philo;
-	// pthread_t		stuffed;
-} 	t_data;
+}	t_data;
 
 /* **************************************************************** */
 /*							PROTOYPES								*/
@@ -77,17 +81,14 @@ int		parsing(t_data *data, int argc, char *argv[]);
 int		init(t_data *data);
 
 /* Process handling */
-int	philo_lifecycle(t_philo *philo);
-int	philo_simulation_main(t_data *data);
-// int philo_simulation_processes(t_data *data);
+int		philo_lifecycle(t_philo *philo);
+int		philo_simulation_main(t_data *data);
 void	ft_free_and_exit(t_data *data, int status);
-// int		ft_create_philo_threads(t_data *data);
 void	ft_print_log(int id, int status, t_data *data);
 int		ft_eating_ceremony(int id, t_data *data);
 void	ft_think(int id, t_data *data);
 void	ft_sleep(int id, t_data *data);
-// int		ft_join_threads(t_data *data);
-int	ft_create_reaper_thread(t_philo *philo);
+int		ft_create_reaper_thread(t_philo *philo);
 
 /* Time related functions */
 long	ft_get_time(void);

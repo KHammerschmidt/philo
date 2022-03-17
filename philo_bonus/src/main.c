@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:19:07 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/15 23:22:39 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:57:34 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_and_exit(t_data *data, int status)
 {
-	if (data->philo)		//why can't I free this?
+	if (data->philo)
 	{
 		free(data->philo);
 		data->philo = NULL;
@@ -29,7 +29,7 @@ void	ft_free_and_exit(t_data *data, int status)
 
 int	main(int argc, char *argv[])
 {
-	t_data 	data;
+	t_data	data;
 
 	data = (t_data){0};
 	if (parsing(&data, argc, argv) != 0)
@@ -43,9 +43,6 @@ int	main(int argc, char *argv[])
 
 /*
 TEST CASES
-
-ERROR with
-./philo_bonus 40 600 200 200
 
 ONE PHILOSOPHER
 ./philo_bonus 1 800 200 200
@@ -88,8 +85,3 @@ end after 7 meals_per_philo
 end after 7 meals_per_philo
 
 */
-
-
-/* Problems:
-- hängt sich auf wenn mte gesetzt ist
-- printed weiter wenn jemand gestorben ist */

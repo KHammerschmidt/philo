@@ -2,7 +2,7 @@ NAME 		=	philo_bonus
 
 CC 			=	gcc
 CFLAGS 		=	-Wall -Werror -Wextra
-#  -fsanitize=thread -g
+# -g -fsanitize=address
 
 SRC_DIR		=	./src/
 OBJ_DIR		=	./obj/
@@ -12,6 +12,7 @@ SRC_LIST	 =	main.c			\
 				init.c			\
 				processes.c		\
 				lifecycle.c		\
+				sleep_think.c	\
 				time_log.c		\
 				reaper.c		\
 				libft_utils.c

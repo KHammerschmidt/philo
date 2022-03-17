@@ -6,7 +6,7 @@
 /*   By: khammers <khammers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 16:11:04 by katharinaha       #+#    #+#             */
-/*   Updated: 2022/03/15 23:21:03 by khammers         ###   ########.fr       */
+/*   Updated: 2022/03/16 15:29:34 by khammers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	single_philo(t_data *data, int id)
 {
 	sem_wait(data->sem_forks);
 	ft_print_log(id, 1, data);
-	ft_usleep(data->ttd + 2);
+	ft_usleep(data->ttd + 8);
 	sem_post(data->sem_forks);
 	sem_wait(data->sem_reaper);
 	ft_print_log(id, 5, data);
@@ -27,7 +27,6 @@ static void	single_philo(t_data *data, int id)
 
 static void	fork_handling(t_data *data, int id, int status)
 {
-	//how to return forks when process is killed
 	if (status == GRABBING_FORKS)
 	{
 		sem_wait(data->sem_forks);
@@ -40,6 +39,7 @@ static void	fork_handling(t_data *data, int id, int status)
 		sem_post(data->sem_forks);
 	}
 }
+
 /* Philosopher enters the eating ceremony of grabbing forks, eating and
 returning the forks. */
 int	ft_eating_ceremony(int id, t_data *data)
@@ -53,41 +53,13 @@ int	ft_eating_ceremony(int id, t_data *data)
 	ft_print_log(id, 2, data);
 	ft_usleep(data->tte);
 	fork_handling(data, id, RETURNING_FORKS);
-	sem_wait(data->sem_reaper);
-	if (data->philo[id].num_meals == data->mte)
-	{
-		printf("%lu %d has eaten enough\n",
-			ft_get_time() - data->starttime, id + 1);
-		sem_post(data->sem_forks);
-		sem_post(data->sem_forks);
-		sem_post(data->sem_print);
-		sem_post(data->sem_reaper);
-		exit(0);
-	}
-	sem_post(data->sem_reaper);
 	return (0);
-}
-
-/* Philosopher sleeps for time-to-sleep duration. */
-void	ft_sleep(int id, t_data *data)
-{
-	ft_print_log(id, 3, data);
-	ft_usleep(data->tts);
-}
-
-/* Philosopher thinks, no time limit. */
-void	ft_think(int id, t_data *data)
-{
-	ft_print_log(id, 4, data);
 }
 
 int	philo_lifecycle(t_philo *philo)
 {
 	if (ft_create_reaper_thread(philo) != 0)
 		exit (1);
-	//set one starttime for each of them
-	// while(ft_get_time() < philo->data->starttime)
-	// 	ft_usleep(5);
 	if ((philo->id % 2) == 0 && philo->data->num_philos != 1)
 	{
 		ft_think(philo->id, philo->data);
